@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="25 25 240 215" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cmgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8" /> <stop offset="100%" stop-color="#6366f1" /> </linearGradient>
+    
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <rect 
+    x="60" y="50" width="120" height="160" rx="16" 
+    fill="#e0e7ff" 
+    stroke="#6366f1" stroke-width="4" 
+    transform="rotate(-12 120 130)" 
+    filter="url(#cardShadow)" 
+  />
+  
+  <rect 
+    x="75" y="65" width="90" height="130" rx="8" 
+    fill="none" 
+    stroke="#c7d2fe" stroke-width="2" 
+    transform="rotate(-12 120 130)" 
+  />
+
+  <rect 
+    x="120" y="60" width="120" height="160" rx="16" 
+    fill="url(#cmgGradient)" 
+    stroke="#ffffff" stroke-width="4" 
+    transform="rotate(8 180 140)" 
+    filter="url(#cardShadow)" 
+  />
+
+  <text 
+    x="180" y="155" 
+    font-family="system-ui, -apple-system, sans-serif" 
+    font-weight="900" 
+    font-size="42" 
+    fill="#ffffff" 
+    text-anchor="middle" 
+    transform="rotate(8 180 140)">
+    CMG
+  </text>
+</svg>

@@ -1,0 +1,213 @@
+/*************************** COMMON & UI STYLES ***************************/
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  margin: 1rem;
+  cursor: pointer;
+  color: white;
+  background-color: #6366f1;
+  font-size: 25px;
+  transition: transform .2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }  
+}
+
+header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+main{
+  margin: 5rem 1rem 0 1rem;
+
+  @media only screen and (max-width: 600px) {
+    margin-top: 8rem;
+  }
+
+  @media only screen and (max-width: 350px) {
+    margin-top: 10rem;
+  }
+}
+
+dialog {
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+  max-width: 90vw;
+
+  &::backdrop {
+    background-color: rgba(97, 97, 97, 0.3);
+  }
+
+  form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    button {
+      margin: 0;
+    }
+  }
+}
+
+#timer {
+  padding: 1rem;
+  font-size: 30px;
+}
+
+/************************* HOME STYLES **************************/
+#home {
+  margin-top: 2rem;
+
+  @media only screen and (max-width: 380px) {
+    margin-top: 4rem;
+  }
+
+  img {
+    max-width: 250px;
+  }
+}
+
+table {
+  margin: 2rem 0;
+  text-align: left;
+
+  td, th {
+    padding: 0.5rem 1rem;
+  }
+}
+
+
+select {
+  font-size: 24px;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 4px 8px;
+  margin-left: 8px;
+  background-color: #6366f1;
+}
+
+#instructions {
+  margin: 3rem 0;
+}
+
+@keyframes increaseDecrease {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#play {
+  margin-top: 3rem;
+  /* @todo add this animation at last */
+  /* animation: increaseDecrease 1s infinite; */
+}
+
+/*************************** GAME STYLES ***************************/
+.two-col-layout {
+  max-width: 400px;
+}
+
+.four-col-layout {
+  max-width: 800px;
+}
+
+.six-col-layout {
+  max-width: 1200px;
+}
+
+/* 1. The Container */
+.flip-card {
+  background-color: transparent;
+  width: 150px;
+  height: 160px;
+  margin: 1rem;
+  cursor: pointer;
+  /* Perspective gives the 3D effect depth. Lower number = more extreme 3D effect */
+  perspective: 1000px;
+}
+
+/* 2. The Inner Wrapper */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); /* Smooth flip animation */
+  /* Ensures child elements are positioned in 3D space, not flattened */
+  transform-style: preserve-3d; 
+}
+
+/* Trigger the flip on hover */
+.flip-active {
+  transform: rotateY(180deg);
+}
+
+/* 3. The Front and Back Faces */
+.flip-card-front, 
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  
+  /* Hides the back of the div when it is turned away from the user */
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden; 
+  
+  /* Just some styling to make it look like a nice card */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+}
+
+.flip-card-front {
+  background-color: #ffffff;
+  color: #333;
+  border: 2px solid #6366f1;
+  color: #6366f1;
+  font-weight: bolder;
+  font-size: 40px;
+  line-height: 50px;
+}
+
+.flip-card-back {
+  /* background-color: #6366f1;  */
+  background-image: linear-gradient(to bottom right, #6366f1, #3639e8);
+  color: white;
+  border: 2px solid #ffffff;
+  
+  /* THIS FIXES THE MIRRORED TEXT */
+  /* It pre-rotates the back face so it faces outward when the parent turns */
+  transform: rotateY(180deg); 
+}
+
+.heading-high-score {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
