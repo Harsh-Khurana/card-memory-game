@@ -14,7 +14,11 @@ export default function Card({ show, matched, children, ...props }: CardProps) {
   return (
     <div className="flip-card" {...props}>
       <div className={`flip-card-inner${isFlipped ? " flip-active" : ""}`}>
-        <div className="flip-card-front flex">Flip me!</div>
+        <div className="flip-card-front flex">
+          Flip
+          <br />
+          me!
+        </div>
         <div className="flip-card-back flex">
           <h2>{children}</h2>
         </div>

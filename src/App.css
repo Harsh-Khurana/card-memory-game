@@ -84,11 +84,7 @@ dialog {
 
 /************************* HOME STYLES **************************/
 #home {
-  margin-top: 2rem;
-
-  @media only screen and (max-width: 380px) {
-    margin-top: 4rem;
-  }
+  margin-top: 4rem;
 
   img {
     max-width: 250px;
@@ -111,11 +107,12 @@ select {
   border-radius: 0.5rem;
   padding: 4px 8px;
   margin-left: 8px;
+  color: white;
   background-color: #6366f1;
 }
 
 #instructions {
-  margin: 3rem 0;
+  margin: 2rem 0;
 }
 
 @keyframes increaseDecrease {
@@ -133,8 +130,7 @@ select {
 
 #play {
   margin-top: 3rem;
-  /* @todo add this animation at last */
-  /* animation: increaseDecrease 1s infinite; */
+  animation: increaseDecrease 1s infinite;
 }
 
 /*************************** GAME STYLES ***************************/
@@ -194,7 +190,6 @@ select {
 
 .flip-card-front {
   background-color: #f4f4f4;
-  color: #333;
   border: 2px solid #6366f1;
   color: #6366f1;
   font-weight: bolder;
@@ -203,10 +198,12 @@ select {
 }
 
 .flip-card-back {
-  /* background-color: #6366f1;  */
   background-image: linear-gradient(to bottom right, #6366f1, #3639e8);
-  color: white;
   border: 2px solid #ffffff;
+
+  h2 {
+    color: white;
+  }
   
   /* THIS FIXES THE MIRRORED TEXT */
   /* It pre-rotates the back face so it faces outward when the parent turns */
