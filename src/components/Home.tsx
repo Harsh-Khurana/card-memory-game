@@ -1,6 +1,7 @@
 import { useState } from "react"
 import type { Level, Stats } from "../App"
 import Modal from "./Modal"
+import { getFormattedTime } from "../utils"
 
 interface HomeProps {
   level: Level
@@ -31,7 +32,7 @@ export default function Home({ level, stats, onLevelChange, onPlay }: HomeProps)
               return (
                 <tr key={level}>
                   <td>{level}</td>
-                  <td>{time}</td>
+                  <td>{time ? getFormattedTime(time) : "-"}</td>
                 </tr>
               )
             })}
@@ -55,11 +56,11 @@ export default function Home({ level, stats, onLevelChange, onPlay }: HomeProps)
             name="level"
             id="level"
             value={level}
-            onChange={e => onLevelChange(parseInt(e.target.value) as Level)}
+            onChange={e => onLevelChange(e.target.value as Level)}
           >
-            <option value="2">Easy</option>
-            <option value="4">Medium</option>
-            <option value="6">Hard</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
           </select>
         </div>
         <button id="play" onClick={onPlay}>

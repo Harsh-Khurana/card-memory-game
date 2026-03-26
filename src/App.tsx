@@ -4,40 +4,36 @@ import "./App.css"
 import Home from "./components/Home"
 import Game from "./components/Game"
 
-// 2 -> easy, 4 -> medium, 6 -> hard
-export type Level = 2 | 4 | 6
+export type Level = "easy" | "medium" | "hard"
 
 export type Stats = {
-  easy: string
-  medium: string
-  hard: string
+  easy?: number
+  medium?: number
+  hard?: number
 }
 
 function App() {
-  const [level, setLevel] = useState<Level>(2)
+  const [level, setLevel] = useState<Level>("easy")
   const [isPlaying, setIsPlaying] = useState(false)
-  const [stats, setStats] = useState({ easy: "-", medium: "-", hard: "-" })
+  const [stats, setStats] = useState<Stats>({ easy: undefined, medium: undefined, hard: undefined })
 
   function handleLevelChange(newLevel: Level) {
     setLevel(newLevel)
   }
 
-  const handleSaveStat = useCallback((level: Level, time: string) => {
-    setStats(prevStats => {
-      if (level === 2) {
-        return { ...prevStats, easy: time }
-      } else if (level === 4) {
-        return { ...prevStats, medium: time }
-      } else {
-        return { ...prevStats, hard: time }
-      }
-    })
+  const handleSaveStat = useCallback((level: Level, time: number) => {
+    setStats(prevStats => ({ ...prevStats, [level]: time }))
   }, [])
 
   return (
     <>
       {isPlaying ? (
-        <Game level={level} onExit={() => setIsPlaying(false)} onComplete={handleSaveStat} />
+        <Game
+          level={level}
+          curLevelStat={stats[level]}
+          onExit={() => setIsPlaying(false)}
+          onComplete={handleSaveStat}
+        />
       ) : (
         <Home
           level={level}

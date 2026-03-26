@@ -44,11 +44,23 @@ main{
   }
 }
 
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
 dialog {
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.4);
   max-width: 90vw;
+  animation: slideDown 1s forwards;
 
   &::backdrop {
     background-color: rgba(97, 97, 97, 0.3);
@@ -175,18 +187,13 @@ select {
   /* Hides the back of the div when it is turned away from the user */
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden; 
-  
-  /* Just some styling to make it look like a nice card */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
   border-radius: 16px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.4);
 }
 
 .flip-card-front {
-  background-color: #ffffff;
+  background-color: #f4f4f4;
   color: #333;
   border: 2px solid #6366f1;
   color: #6366f1;
@@ -211,3 +218,49 @@ select {
   margin-bottom: 1rem;
 }
 
+@keyframes shrinkGrow {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+.heart {
+  animation: shrinkGrow 2s infinite;
+}
+
+@keyframes upDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.hand {
+  animation: upDown 1s infinite;
+}
+
+
+@keyframes rotating {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+
+.sparkly-eyes {
+  animation: rotating 2s linear infinite;
+}

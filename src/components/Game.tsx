@@ -1,35 +1,37 @@
-import { Fragment, useEffect, useRef, useState } from "react"
+import { Fragment, useRef, useState, useMemo } from "react"
 
 import type { Level } from "../App"
 import Card from "./Card"
 import Modal from "./Modal"
 import Timer from "./Timer"
-import { generateCardMatrix, getTimeDiffernceFromNow } from "../utils"
+import { generateCardMatrix, getTimeDiffernceFromNowInMs } from "../utils"
 
 interface GameProps {
   level: Level
+  curLevelStat?: number
   onExit: () => void
-  onComplete: (level: Level, time: string) => void
+  onComplete: (level: Level, time: number) => void
 }
 
-export default function Game({ level, onExit, onComplete }: GameProps) {
-  const [cardMatrix, setCardMatrix] = useState(generateCardMatrix(level))
+export default function Game({ level, curLevelStat, onExit, onComplete }: GameProps) {
+  const gameStrength = useMemo(() => (level === "easy" ? 2 : level === "medium" ? 4 : 6), [level])
+  const [cardMatrix, setCardMatrix] = useState(generateCardMatrix(gameStrength))
   const [firstSelectedCard, setFirstSelectedCard] = useState<{ row: number; col: number } | null>(
     null,
   )
   const [matchedCardCount, setMatchedCardCount] = useState(0)
+  const [isHighScore, setIsHighScore] = useState(false)
+
   const isCardCheckExecuting = useRef(false)
   const initialTime = useRef(new Date().getTime())
 
-  useEffect(() => {
-    if (matchedCardCount === level * level) {
-      const timeDiff = getTimeDiffernceFromNow(initialTime.current)
-      onComplete(level, timeDiff)
-    }
-  }, [level, matchedCardCount, onComplete])
-
   async function handleCardClick(rowIdx: number, colIdx: number) {
     if (isCardCheckExecuting.current) return
+
+    // Maintaining a local matched card count since after game finishes the state update to
+    // matchedCardCount happens at a later point since react will batch it. But we are already
+    // checking if game finished executing at the end
+    let localMatchedCardCount = matchedCardCount
 
     if (firstSelectedCard) {
       isCardCheckExecuting.current = true
@@ -51,6 +53,7 @@ export default function Game({ level, onExit, onComplete }: GameProps) {
           return newCardMatrix
         })
         setMatchedCardCount(prevCount => prevCount + 2)
+        localMatchedCardCount += 2
       } else {
         await new Promise(resolve => setTimeout(resolve, 1000))
         setCardMatrix(oldCardMatrix => {
@@ -65,6 +68,15 @@ export default function Game({ level, onExit, onComplete }: GameProps) {
       setFirstSelectedCard({ row: rowIdx, col: colIdx })
     }
     isCardCheckExecuting.current = false
+
+    // IF GAME FINISHED
+    if (localMatchedCardCount === gameStrength * gameStrength) {
+      const msDiff = getTimeDiffernceFromNowInMs(initialTime.current)
+      if (!curLevelStat || curLevelStat - msDiff > 0) {
+        setIsHighScore(true)
+        onComplete(level, msDiff)
+      }
+    }
   }
 
   const cardsLayout = cardMatrix.map((cardRow, i) => {
@@ -88,20 +100,28 @@ export default function Game({ level, onExit, onComplete }: GameProps) {
     <>
       <header>
         <button onClick={onExit}>&lt; Go back to main menu</button>
-        <Timer completed={matchedCardCount === level * level} />
+        <Timer completed={matchedCardCount === gameStrength * gameStrength} />
       </header>
       <main
         className={
           "flex " +
-          (level === 2 ? "two-col-layout" : level === 4 ? "four-col-layout" : "six-col-layout")
+          (level === "easy"
+            ? "two-col-layout"
+            : level === "medium"
+              ? "four-col-layout"
+              : "six-col-layout")
         }
       >
         {cardsLayout}
       </main>
-      <Modal isOpen={matchedCardCount === level * level} onClose={onExit}>
+      <Modal isOpen={matchedCardCount === gameStrength * gameStrength} onClose={onExit}>
         <h2>Congrats!! You found em all.</h2>
-        <h1 className="flex">♡⸜(ˆᗜˆ˵ )⸝♡</h1>
-        <h2 className="flex heading-high-score">(,,⟡o⟡,,) New high score</h2>
+        <h1 className="flex">
+          <span className="heart">♡</span>
+          <span className="hand">⸜</span>(ˆᗜˆ˵ )<span className="hand">⸝</span>
+          <span className="heart">♡</span>
+        </h1>
+        {isHighScore && <h2 className="flex heading-high-score">And a new high score</h2>}
       </Modal>
     </>
   )

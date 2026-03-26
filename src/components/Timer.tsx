@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { getTimeDiffernceFromNow } from "../utils"
+import { getTimeDiffernceFromNowInMs, getFormattedTime } from "../utils"
 
 interface TimerProps {
   completed: boolean
@@ -14,7 +14,8 @@ export default function Timer({ completed }: TimerProps) {
 
     if (!completed) {
       intervalId = setInterval(() => {
-        const timeDiff = getTimeDiffernceFromNow(initialTime.current)
+        const msDiff = getTimeDiffernceFromNowInMs(initialTime.current)
+        const timeDiff = getFormattedTime(msDiff)
         setTimer(timeDiff)
       }, 1000)
     }

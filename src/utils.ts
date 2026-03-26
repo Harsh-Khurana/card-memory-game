@@ -19,10 +19,12 @@ const kaomojis = [
   "(－ω－) zzZ",
 ]
 
-export function getTimeDiffernceFromNow(timeInMilliseconds: number) {
-  const msDiff = new Date().getTime() - timeInMilliseconds
-  const timeDiff = new Date(msDiff).toISOString().slice(11, 19)
-  return timeDiff
+export function getTimeDiffernceFromNowInMs(timeInMilliseconds: number) {
+  return new Date().getTime() - timeInMilliseconds
+}
+
+export function getFormattedTime(timeInMilliseconds: number) {
+  return new Date(timeInMilliseconds).toISOString().slice(11, 19)
 }
 
 export function generateCardMatrix(size: number) {
