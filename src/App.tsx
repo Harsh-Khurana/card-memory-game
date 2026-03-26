@@ -12,17 +12,30 @@ export type Stats = {
   hard?: number
 }
 
+const localStoredStats = localStorage.getItem("cmg-stats")
+let storedStats: Stats = {}
+
+if (localStoredStats) {
+  storedStats = JSON.parse(localStoredStats)
+}
+
+storedStats = { easy: undefined, medium: undefined, hard: undefined, ...storedStats }
+
 function App() {
   const [level, setLevel] = useState<Level>("easy")
   const [isPlaying, setIsPlaying] = useState(false)
-  const [stats, setStats] = useState<Stats>({ easy: undefined, medium: undefined, hard: undefined })
+  const [stats, setStats] = useState<Stats>(storedStats as Stats)
 
   function handleLevelChange(newLevel: Level) {
     setLevel(newLevel)
   }
 
   const handleSaveStat = useCallback((level: Level, time: number) => {
-    setStats(prevStats => ({ ...prevStats, [level]: time }))
+    setStats(prevStats => {
+      const newStats = { ...prevStats, [level]: time }
+      localStorage.setItem("cmg-stats", JSON.stringify(newStats))
+      return newStats
+    })
   }, [])
 
   return (
