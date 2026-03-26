@@ -149,8 +149,8 @@ select {
 /* 1. The Container */
 .flip-card {
   background-color: transparent;
-  width: 150px;
-  height: 160px;
+  width: 140px;
+  height: 150px;
   margin: 1rem;
   cursor: pointer;
   /* Perspective gives the 3D effect depth. Lower number = more extreme 3D effect */
