@@ -48,7 +48,7 @@ export function generateCardMatrix(size: number) {
 
   // shuffling content using fisher yates algo
   for (let i = shuffleHelper.length - 1; i > 0; i--) {
-    const randomIdx = Math.floor(Math.random() * (i - 1))
+    const randomIdx = Math.floor(Math.random() * (i + 1))
     const [rowIdx, colIdx] = shuffleHelper[i]
     const [randomRowIdx, randomColIdx] = shuffleHelper[randomIdx]
 
